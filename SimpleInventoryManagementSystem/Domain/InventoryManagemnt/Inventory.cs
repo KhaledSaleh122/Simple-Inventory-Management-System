@@ -45,5 +45,10 @@ namespace SimpleInventoryManagementSystem.Domain.InventoryManagemnt
         {
             return product.Update(name.ToLower(),price,quantity);
         }
+
+        internal static Product DeleteProduct(Product product) {
+            products.Remove(product);
+            return product;
+        }
     }
 }

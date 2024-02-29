@@ -46,7 +46,7 @@ namespace SimpleInventoryManagementSystem.Domain
                 }
             } while (userInput != "0");
         }
-        internal static void ShowEditProductMenu() {
+        private static void ShowEditProductMenu() {
             String userInput;
             Product product = null;
             String name;
@@ -148,7 +148,7 @@ namespace SimpleInventoryManagementSystem.Domain
             Console.ReadLine();
 
         }
-        internal static void ShowAllProducts()
+        private static void ShowAllProducts()
         {
             Inventory.DisplayProducts();
             Console.WriteLine("\nPress enter to back");
