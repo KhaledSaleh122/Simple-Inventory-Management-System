@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SimpleInventoryManagementSystem.Domain.InventoryManagemnt;
+using SimpleInventoryManagementSystem.Domain.ProductManagement;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -44,30 +46,35 @@ namespace SimpleInventoryManagementSystem.Domain
                 }
             } while (userInput != "0");
         }
-        internal static void ShowAddProductMenu()
+        private static void ShowAddProductMenu()
         {
             String userInput;
             String name = String.Empty;
             do
             {
                 Console.WriteLine();
-                Console.WriteLine("Enter The Product Name: (ENTER 0 TO CANCEL THE OPERATION)");
+                Console.WriteLine("Enter The Product Name: (ENTER ~ TO CANCEL THE OPERATION)");
                 userInput = Console.ReadLine();
                 if (String.IsNullOrEmpty(userInput))
                 {
                     Console.WriteLine("Invaild Input");
+                    continue;
                 }
-                else if (userInput == "0")
+                else if (userInput == "~")
                 {
                     return;
                 }
                 //Check if name allready exist
+                if (Inventory.IsProductNameAlreadyUsed(userInput)) {
+                    Console.WriteLine("There already product with this name.");
+                    continue;
+                }
                 name = userInput;
             } while (String.IsNullOrEmpty(name));
             int price = -1;
             do
             {
-                Console.WriteLine("Enter The Product Price: (ENTER 0 TO CANCEL THE OPERATION)");
+                Console.WriteLine("Enter The Product Price: (ENTER ~ TO CANCEL THE OPERATION)");
                 userInput = Console.ReadLine();
                 bool sucess = int.TryParse(userInput, out int price_);
                 if (!sucess)
@@ -76,14 +83,43 @@ namespace SimpleInventoryManagementSystem.Domain
                     continue;
                 }
                 price = price_;
-                if (userInput == "0")
+                if (userInput == "~")
                 {
                     return;
                 }
-                if (price < 0) { 
-                    Console.WriteLine("Price must be bigger or equal to zero")
+                if (price < 0) {
+                    Console.WriteLine("Price must be bigger or equal to zero");
+                    continue;
                 }
             } while (price < 0);
+            int quantity = -1;
+            do
+            {
+                Console.WriteLine("Enter The Product Quantity: (ENTER ~ TO CANCEL THE OPERATION)");
+                userInput = Console.ReadLine();
+                bool sucess = int.TryParse(userInput, out int quantity_);
+                if (!sucess)
+                {
+                    Console.WriteLine("Invaild Input");
+                    continue;
+                }
+                quantity = quantity_;
+                if (userInput == "~")
+                {
+                    return;
+                }
+                if (quantity < 0)
+                {
+                    Console.WriteLine("Quantity must be bigger or equal to zero");
+                    continue;
+                }
+            } while (quantity < 0);
+            //add item to inventory
+            Product product =  Inventory.AddProduct(name, price, quantity);
+            Console.WriteLine("\nYou successfully created a new product\n");
+            Console.WriteLine(product);
+            Console.WriteLine("\nPress enter to back");
+            Console.ReadLine();
         }
     }
 }
