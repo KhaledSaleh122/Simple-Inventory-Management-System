@@ -31,7 +31,7 @@ namespace SimpleInventoryManagementSystem.Domain
                     case "1":
                         ShowAddProductMenu();break;
                     case "2":
-                        //ShowAllProducts();break;
+                        ShowAllProducts();break;
                     case "3":
                         //ShowEditProductMenu();break;
                     case "4":
@@ -45,6 +45,12 @@ namespace SimpleInventoryManagementSystem.Domain
                         break;
                 }
             } while (userInput != "0");
+        }
+        internal static void ShowAllProducts()
+        {
+            Inventory.DisplayProducts();
+            Console.WriteLine("\nPress enter to back");
+            Console.ReadLine();
         }
         private static void ShowAddProductMenu()
         {
