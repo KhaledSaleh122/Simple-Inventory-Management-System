@@ -43,10 +43,7 @@ namespace SimpleInventoryManagementSystem.Domain.InventoryManagemnt
         }
         internal static Product UpdateProduct(Product product, String name, int price, int quantity)
         {
-            product.Price = price;
-            product.Quantity = quantity;
-            product.Name = name;
-            return product;
+            return product.Update(name,price,quantity);
         }
     }
 }
