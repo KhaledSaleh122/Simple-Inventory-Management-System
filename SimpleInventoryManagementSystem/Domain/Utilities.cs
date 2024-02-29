@@ -35,7 +35,7 @@ namespace SimpleInventoryManagementSystem.Domain
                     case "3":
                         ShowEditProductMenu();break;
                     case "4":
-                        //ShowDeleteProductMenu();break;
+                        ShowDeleteProductMenu();break;
                     case "5":
                         //ShowSearchForProductMenu();break;
                     case "0":
@@ -45,6 +45,36 @@ namespace SimpleInventoryManagementSystem.Domain
                         break;
                 }
             } while (userInput != "0");
+        }
+        private static void ShowDeleteProductMenu() {
+            String userInput;
+            Product product = null;
+            do
+            {
+                Console.WriteLine();
+                Console.WriteLine("Enter name of product you want to delete: (ENTER ~ TO CANCEL THE OPERATION)");
+                userInput = Console.ReadLine();
+                if (String.IsNullOrEmpty(userInput))
+                {
+                    Console.WriteLine("Invaild Input");
+                    continue;
+                }
+                else if (userInput == "~")
+                {
+                    return;
+                }
+                product = Inventory.GetProduct(userInput);
+                if (product == null)
+                {
+                    Console.WriteLine("There's no product with this name");
+                    continue;
+                }
+            } while (product == null);
+            Inventory.DeleteProduct(product);
+            Console.WriteLine("\nYou successfully deleted the product\n");
+            Console.WriteLine(product);
+            Console.WriteLine("\nPress enter to back");
+            Console.ReadLine();
         }
         private static void ShowEditProductMenu() {
             String userInput;
@@ -142,7 +172,7 @@ namespace SimpleInventoryManagementSystem.Domain
             } while (quantity < 0);
             //Edit current product data
             Inventory.UpdateProduct(product, name, price, quantity);
-            Console.WriteLine("\nYou successfully edited product info\n");
+            Console.WriteLine("\nYou successfully edited the product info\n");
             Console.WriteLine(product);
             Console.WriteLine("\nPress enter to back");
             Console.ReadLine();
