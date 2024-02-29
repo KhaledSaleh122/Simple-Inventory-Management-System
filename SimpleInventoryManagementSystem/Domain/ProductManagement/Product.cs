@@ -72,5 +72,25 @@ namespace SimpleInventoryManagementSystem.Domain.ProductManagement
                 throw new ArgumentOutOfRangeException("Quantity must be bigger or equal to zero");
             }
         }
+        internal Product Update(String name, int price, int quantity) {
+            if (name != this.name) {
+                ValidateName(name);
+                this.name = name;
+            }
+            if (price != this.Price) { 
+                ValidatePrice(price);
+                this.price = price;
+            }
+            if (quantity != this.Quantity)
+            {
+                ValidateQuantity(quantity);
+                this.quantity = quantity;
+            }
+            return this;
+        }
+        public override String ToString()
+        {
+            return $"Product Information\nName: {this.Name} Price: {this.Price} Quantity:{this.Quantity}";
+        }
     }
 }
