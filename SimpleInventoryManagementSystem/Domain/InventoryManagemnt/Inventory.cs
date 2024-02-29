@@ -11,20 +11,24 @@ namespace SimpleInventoryManagementSystem.Domain.InventoryManagemnt
     internal class Inventory
     {
         private static List<Product> products = new List<Product>();
-        internal static bool IsProductNameAlreadyUsed(String name) { 
+        internal static bool IsProductNameAlreadyUsed(String name)
+        {
             return GetProduct(name) != null;
         }
-        internal static Product AddProduct(String name,int price,int quantity) {
+        internal static Product AddProduct(String name, int price, int quantity)
+        {
             Product product = new Product(name, price, quantity);
             products.Add(product);
             return product;
         }
-        public static void DisplayProducts() {
+        public static void DisplayProducts()
+        {
             StringBuilder sb = new StringBuilder();
             sb.Append("Name  |  Price  |  Quantity\n");
             Console.WriteLine("{0,-15} | {1,-10} | {2,-8}", "Name", "Price", "Quantity");
             Console.WriteLine(new string('-', 40)); // Separator line
-            if (products.Count == 0) {
+            if (products.Count == 0)
+            {
                 Console.WriteLine("No products in inventory yet");
                 return;
             }
@@ -36,6 +40,13 @@ namespace SimpleInventoryManagementSystem.Domain.InventoryManagemnt
         internal static Product GetProduct(String name)
         {
             return products.Find((e) => e.Name == name);
+        }
+        internal static Product UpdateProduct(Product product, String name, int price, int quantity)
+        {
+            product.Price = price;
+            product.Quantity = quantity;
+            product.Name = name;
+            return product;
         }
     }
 }
