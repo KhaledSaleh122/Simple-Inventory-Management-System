@@ -33,7 +33,7 @@ namespace SimpleInventoryManagementSystem.Domain
                     case "2":
                         ShowAllProducts();break;
                     case "3":
-                        //ShowEditProductMenu();break;
+                        ShowEditProductMenu();break;
                     case "4":
                         //ShowDeleteProductMenu();break;
                     case "5":
@@ -45,6 +45,24 @@ namespace SimpleInventoryManagementSystem.Domain
                         break;
                 }
             } while (userInput != "0");
+        }
+        internal static void ShowEditProductMenu() {
+            String userInput;
+            do { 
+                Console.WriteLine();
+                Console.WriteLine("Enter name of product you want to edit: (ENTER ~ TO CANCEL THE OPERATION)");
+                userInput = Console.ReadLine();
+                if (String.IsNullOrEmpty(userInput))
+                {
+                    Console.WriteLine("Invaild Input");
+                    continue;
+                }
+                else if (userInput == "~")
+                {
+                    return;
+                }
+
+            } while (userInput != "~");
         }
         internal static void ShowAllProducts()
         {
