@@ -74,6 +74,7 @@ namespace SimpleInventoryManagementSystem.Domain
             } while (product == null);
 
             do {
+                Console.WriteLine($"Product with name {product.Name} found successfully");
                 Console.WriteLine();
                 Console.WriteLine($"Enter new name or press enter to keep current name ({product.Name}) : (ENTER ~ TO CANCEL THE OPERATION)");
                 userInput = Console.ReadLine();
@@ -87,9 +88,7 @@ namespace SimpleInventoryManagementSystem.Domain
                     }
                     name = userInput;
                 }
-                else {
-                    break;
-                }
+                break;
             } while (userInput != "~");
 
             do
