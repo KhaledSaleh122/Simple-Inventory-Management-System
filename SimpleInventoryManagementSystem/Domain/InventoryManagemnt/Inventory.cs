@@ -13,11 +13,11 @@ namespace SimpleInventoryManagementSystem.Domain.InventoryManagemnt
         private static List<Product> products = new List<Product>();
         internal static bool IsProductNameAlreadyUsed(String name)
         {
-            return GetProduct(name) != null;
+            return GetProduct(name.ToLower()) != null;
         }
         internal static Product AddProduct(String name, int price, int quantity)
         {
-            Product product = new Product(name, price, quantity);
+            Product product = new Product(name.ToLower(), price, quantity);
             products.Add(product);
             return product;
         }
@@ -39,11 +39,11 @@ namespace SimpleInventoryManagementSystem.Domain.InventoryManagemnt
         }
         internal static Product GetProduct(String name)
         {
-            return products.Find((e) => e.Name == name);
+            return products.Find((e) => e.Name == name.ToLower());
         }
         internal static Product UpdateProduct(Product product, String name, int price, int quantity)
         {
-            return product.Update(name,price,quantity);
+            return product.Update(name.ToLower(),price,quantity);
         }
     }
 }

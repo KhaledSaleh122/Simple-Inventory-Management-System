@@ -18,7 +18,7 @@ namespace SimpleInventoryManagementSystem.Domain.ProductManagement
             }
             set { 
                 ValidateName(value);
-                name = value;
+                name = value.ToLower();
             }
        }
        internal int Price {
@@ -48,13 +48,13 @@ namespace SimpleInventoryManagementSystem.Domain.ProductManagement
             ValidateQuantity(quantity);
             this.price = price;
             this.quantity = quantity;
-            this.name = name;
+            this.name = name.ToLower();
        }
         internal static void ValidateName(String name) {
             if (String.IsNullOrEmpty(name)) { 
                 throw new ArgumentNullException("name");
             }
-            if (Inventory.IsProductNameAlreadyUsed(name))
+            if (Inventory.IsProductNameAlreadyUsed(name.ToLower()))
             {
                 throw new ArgumentException("There is a product with this name");
             }
@@ -73,6 +73,7 @@ namespace SimpleInventoryManagementSystem.Domain.ProductManagement
             }
         }
         internal Product Update(String name, int price, int quantity) {
+            name = name.ToLower();
             if (name != this.name) {
                 ValidateName(name);
                 this.name = name;
