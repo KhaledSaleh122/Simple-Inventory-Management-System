@@ -8,9 +8,14 @@ namespace SimpleInventoryManagementSystem.Domain.InventoryManagemnt
 {
     internal class Inventory
     {
-        internal static List<Product> products = new List<Product>();
+        private static List<Product> products = new List<Product>();
         internal static bool IsProductNameAlreadyUsed(String name) { 
             return products.Find((e) => e.Name == name) != null;
+        }
+        internal static Product AddProduct(String name,int price,int quantity) {
+            Product product = new Product(name, price, quantity);
+            products.Add(product);
+            return product;
         }
     }
 }
