@@ -16,7 +16,7 @@ namespace SimpleInventoryManagementSystem.Domain
             do
             {
                 Console.Clear();
-                Console.WriteLine("Wellcome to Inventory Management System");
+                Console.WriteLine("Wellcome to Product Inventory Management System");
                 Console.WriteLine();
                 Console.WriteLine("**Select an Action from the Menu**");
                 Console.WriteLine();
@@ -37,7 +37,7 @@ namespace SimpleInventoryManagementSystem.Domain
                     case "4":
                         ShowDeleteProductMenu();break;
                     case "5":
-                        //ShowSearchForProductMenu();break;
+                        ShowSearchForProductMenu();break;
                     case "0":
                         break;
                     default:
@@ -45,6 +45,37 @@ namespace SimpleInventoryManagementSystem.Domain
                         break;
                 }
             } while (userInput != "0");
+        }
+        private static void ShowSearchForProductMenu() {
+            String userInput;
+            Product product = null;
+            do
+            {
+                Console.WriteLine();
+                Console.WriteLine("Enter name of product you searching for: (ENTER ~ TO CANCEL THE OPERATION)");
+                userInput = Console.ReadLine();
+                if (String.IsNullOrEmpty(userInput))
+                {
+                    Console.WriteLine("Invaild Input");
+                    continue;
+                }
+                else if (userInput == "~")
+                {
+                    return;
+                }
+                product = Inventory.GetProduct(userInput);
+                if (product == null)
+                {
+                    Console.WriteLine("There's no product with this name");
+                    Console.WriteLine("\nPress enter to back");
+                    Console.ReadLine();
+                    return;
+                }
+            } while (product == null);
+            Console.WriteLine("\nProduct Found successfully\n");
+            Console.WriteLine(product);
+            Console.WriteLine("\nPress enter to back");
+            Console.ReadLine();
         }
         private static void ShowDeleteProductMenu() {
             String userInput;
