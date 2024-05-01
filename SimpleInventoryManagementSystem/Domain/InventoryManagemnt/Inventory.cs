@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using SimpleInventoryManagementSystem.Domain.DatabaseManagemnt;
 using SimpleInventoryManagementSystem.Domain.ProductManagement;
 namespace SimpleInventoryManagementSystem.Domain.InventoryManagemnt
 {
@@ -17,6 +19,18 @@ namespace SimpleInventoryManagementSystem.Domain.InventoryManagemnt
         }
         internal static Product AddProduct(String name, int price, int quantity)
         {
+            var databaseConnection = new Database();
+            string query = "INSERT INTO Products (name, price, quantity) VALUES (@name, @price, @quantity)";
+            using (SqlCommand command = new SqlCommand(query, databaseConnection.GetSqlConnection()))
+            {
+                command.Parameters.AddWithValue("@name", name);
+                command.Parameters.AddWithValue("@price", price);
+                command.Parameters.AddWithValue("@quantity", quantity);
+                int result = command.ExecuteNonQuery();
+                if (result < 0)
+                    new Exception("Error inserting data into Database!");
+            }
+            databaseConnection.CloseSqlConnection();
             Product product = new Product(name.ToLower(), price, quantity);
             products.Add(product);
             return product;
@@ -43,10 +57,11 @@ namespace SimpleInventoryManagementSystem.Domain.InventoryManagemnt
         }
         internal static Product UpdateProduct(Product product, String name, int price, int quantity)
         {
-            return product.Update(name.ToLower(),price,quantity);
+            return product.Update(name.ToLower(), price, quantity);
         }
 
-        internal static Product DeleteProduct(Product product) {
+        internal static Product DeleteProduct(Product product)
+        {
             products.Remove(product);
             return product;
         }
