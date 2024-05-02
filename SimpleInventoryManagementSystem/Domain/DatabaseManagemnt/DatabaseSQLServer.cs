@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace SimpleInventoryManagementSystem.Domain.DatabaseManagemnt
 {
-    public class Database
+    public class DatabaseSQLServer : IDatabase, IDatabaseOpenClose
     {
         private string connectionString = "Server=; Database=SimpleInventory; Integrated Security=True;";
         SqlConnection SqlConnection { get; }
-        public Database()
+        public DatabaseSQLServer()
         {
             SqlConnection = new SqlConnection(connectionString);
             SqlConnection.Open();

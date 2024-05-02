@@ -42,6 +42,9 @@ namespace SimpleInventoryManagementSystem.Domain.ProductManagement
                 quantity = value;
             }
         }
+        public Product() {
+        
+        }
        internal Product(String name,int price,int quantity) {
             ValidateName(name);
             ValidatePrice(price);

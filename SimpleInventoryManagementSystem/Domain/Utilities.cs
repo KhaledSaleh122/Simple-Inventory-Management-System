@@ -1,4 +1,5 @@
-﻿using SimpleInventoryManagementSystem.Domain.InventoryManagemnt;
+﻿using SimpleInventoryManagementSystem.Domain.DatabaseManagemnt;
+using SimpleInventoryManagementSystem.Domain.InventoryManagemnt;
 using SimpleInventoryManagementSystem.Domain.ProductManagement;
 using System;
 using System.Collections.Generic;
@@ -27,17 +28,18 @@ namespace SimpleInventoryManagementSystem.Domain
                 Console.WriteLine("5: Search for a product");
                 Console.WriteLine("0: Close the application");
                 userInput = Console.ReadLine();
-                switch (userInput) {
+                switch (userInput)
+                {
                     case "1":
-                        ShowAddProductMenu();break;
+                        ShowAddProductMenu(); break;
                     case "2":
-                        ShowAllProducts();break;
+                        ShowAllProducts(); break;
                     case "3":
-                        ShowEditProductMenu();break;
+                        ShowEditProductMenu(); break;
                     case "4":
-                        ShowDeleteProductMenu();break;
+                        ShowDeleteProductMenu(); break;
                     case "5":
-                        ShowSearchForProductMenu();break;
+                        ShowSearchForProductMenu(); break;
                     case "0":
                         break;
                     default:
@@ -46,7 +48,8 @@ namespace SimpleInventoryManagementSystem.Domain
                 }
             } while (userInput != "0");
         }
-        private static void ShowSearchForProductMenu() {
+        private static void ShowSearchForProductMenu()
+        {
             String userInput;
             Product product = null;
             do
@@ -77,7 +80,8 @@ namespace SimpleInventoryManagementSystem.Domain
             Console.WriteLine("\nPress enter to back");
             Console.ReadLine();
         }
-        private static void ShowDeleteProductMenu() {
+        private static void ShowDeleteProductMenu()
+        {
             String userInput;
             Product product = null;
             do
@@ -107,13 +111,15 @@ namespace SimpleInventoryManagementSystem.Domain
             Console.WriteLine("\nPress enter to back");
             Console.ReadLine();
         }
-        private static void ShowEditProductMenu() {
+        private static void ShowEditProductMenu()
+        {
             String userInput;
             Product product = null;
             String name;
             int price;
             int quantity;
-            do { 
+            do
+            {
                 Console.WriteLine();
                 Console.WriteLine("Enter name of product you want to edit: (ENTER ~ TO CANCEL THE OPERATION)");
                 userInput = Console.ReadLine();
@@ -134,7 +140,8 @@ namespace SimpleInventoryManagementSystem.Domain
                 }
             } while (product == null);
 
-            do {
+            do
+            {
                 Console.WriteLine($"Product with name {product.Name} found successfully");
                 Console.WriteLine();
                 Console.WriteLine($"Enter new name or press enter to keep current name ({product.Name}) : (ENTER ~ TO CANCEL THE OPERATION)");
@@ -188,9 +195,11 @@ namespace SimpleInventoryManagementSystem.Domain
                     quantity = product.Quantity;
                     break;
                 }
-                else { 
+                else
+                {
                     bool success = int.TryParse(userInput, out quantity);
-                    if (!success) {
+                    if (!success)
+                    {
                         Console.WriteLine("Invaild Input");
                         continue;
                     }
@@ -234,7 +243,8 @@ namespace SimpleInventoryManagementSystem.Domain
                     return;
                 }
                 //Check if name allready exist
-                if (Inventory.IsProductNameAlreadyUsed(userInput)) {
+                if (Inventory.IsProductNameAlreadyUsed(userInput))
+                {
                     Console.WriteLine("There already product with this name.");
                     continue;
                 }
@@ -255,7 +265,8 @@ namespace SimpleInventoryManagementSystem.Domain
                 {
                     return;
                 }
-                if (price < 0) {
+                if (price < 0)
+                {
                     Console.WriteLine("Price must be bigger or equal to zero");
                     continue;
                 }
@@ -282,7 +293,8 @@ namespace SimpleInventoryManagementSystem.Domain
                 }
             } while (quantity < 0);
             //add item to inventory
-            Product product =  Inventory.AddProduct(name, price, quantity);
+            var inventory = InventoryDBFactory.GetInventoryDB(DatabaseType.MongoDB);
+            Product product = inventory.AddProduct(name, price, quantity);
             Console.WriteLine("\nYou successfully created a new product\n");
             Console.WriteLine(product);
             Console.WriteLine("\nPress enter to back");

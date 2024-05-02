@@ -19,19 +19,7 @@ namespace SimpleInventoryManagementSystem.Domain.InventoryManagemnt
         }
         internal static Product AddProduct(String name, int price, int quantity)
         {
-            var databaseConnection = new Database();
-            string query = "INSERT INTO Products (name, price, quantity) VALUES (@name, @price, @quantity)";
-            using (SqlCommand command = new SqlCommand(query, databaseConnection.GetSqlConnection()))
-            {
-                command.Parameters.AddWithValue("@name", name);
-                command.Parameters.AddWithValue("@price", price);
-                command.Parameters.AddWithValue("@quantity", quantity);
-                int result = command.ExecuteNonQuery();
-                if (result < 0)
-                    new Exception("Error inserting data into Database!");
-            }
-            databaseConnection.CloseSqlConnection();
-            Product product = new Product(name.ToLower(), price, quantity);
+            var product = new Product(name, price, quantity);
             products.Add(product);
             return product;
         }
